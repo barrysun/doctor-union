@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true" scanPeriod="10 seconds">
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <contextName>logback</contextName>
+    <property name="log.path" value="logs/" />
+
+    <appender name="INFO"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 每天一归档 -->
+            <fileNamePattern>${log.path}doctor-union.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- 按时间回滚的同时，按文件大小来回滚 -->
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date %level [%thread] %X{traceid} %logger{36} [%file : %line] %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+    <!-- mybatis日志打印 -->
+    <logger name="com.doctorwork.union.module.agent.dao" level="DEBUG" additivity="false">
+        <appender-ref ref="INFO"/>
+    </logger>
+    <logger name="com.doctorwork.union.module.doctor.dao" level="DEBUG" additivity="false">
+        <appender-ref ref="INFO"/>
+    </logger>
+    <logger name="com.doctorwork.union.module.income.dao" level="DEBUG" additivity="false">
+        <appender-ref ref="INFO"/>
+    </logger>
+
+    <logger name="com.doctorwork.union.module.invitation.dao" level="DEBUG" additivity="false">
+        <appender-ref ref="INFO"/>
+    </logger>
+    <logger name="com.doctorwork.union.module.order.dao" level="DEBUG" additivity="false">
+        <appender-ref ref="INFO"/>
+    </logger>
+    <logger name="com.doctorwork.union.module.visit.dao" level="DEBUG" additivity="false">
+        <appender-ref ref="INFO"/>
+    </logger>
+    <logger name="com.doctorwork.union.module.withdrawals.dao" level="DEBUG" additivity="false">
+        <appender-ref ref="INFO"/>
+    </logger>
+    <root level="info">
+        <appender-ref ref="INFO" />
+    </root>
+</configuration>

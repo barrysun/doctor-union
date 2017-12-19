@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.doctorwork.union.module.withdrawals.dao.WithdrawalsExpMapper">
+    <resultMap id="BaseResultMap" type="com.doctorwork.union.module.withdrawals.bean.WithdrawalsRes">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="withdrawals_date" jdbcType="BIGINT" property="withdrawalsDate" />
+        <result column="withdrawals_money" jdbcType="DECIMAL" property="withdrawalsMoney" />
+        <result column="service_money" jdbcType="DECIMAL" property="serviceMoney" />
+        <result column="personal_income_tax_money" jdbcType="DECIMAL" property="personalIncomeTaxMoney" />
+        <result column="arrival_money" jdbcType="DECIMAL" property="arrivalMoney" />
+        <result column="balance" jdbcType="DECIMAL" property="balance" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="reason" jdbcType="VARCHAR" property="reason" />
+        <result column="create_time" jdbcType="BIGINT" property="createTime" />
+        <result column="modify_time" jdbcType="BIGINT" property="modifyTime" />
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+        <result column="doctor_id" jdbcType="VARCHAR" property="doctorId" />
+        <result column="passport_id" jdbcType="VARCHAR" property="passportId" />
+        <result column="doctor_name" jdbcType="VARCHAR" property="doctorName" />
+        <result column="check_batch" property="checkBatch" jdbcType="VARCHAR" />
+    </resultMap>
+  <select id="selectWithdrawals" parameterType="com.doctorwork.union.module.withdrawals.vo.WithdrawalsVo" resultMap="BaseResultMap">
+      SELECT a.id, a.withdrawals_date, a.withdrawals_money,
+      a.service_money, a.personal_income_tax_money, a.arrival_money,
+      a.balance, a.status, a.reason,
+      a.create_time, a.modify_time, a.is_delete,
+      a.doctor_id, a.passport_id,d.doctor_name,a.check_batch FROM t_withdrawals a,t_doctor d WHERE a.is_delete =0 and a.doctor_id = d.id
+      <if test="doctorName != null">
+          AND d.doctor_name LIKE CONCAT("%",#{doctorName},"%")
+      </if>
+      <if test="isHistory != null and isHistory==1">
+          AND a.check_batch =#{checkBatch}
+      </if>
+      <if test="isHistory != null and isHistory==2">
+          AND status != 0
+      </if>
+      ORDER BY a.modify_time DESC
+  </select>
+    <update id="deleteByCheckBatch" parameterType="String">
+        UPDATE t_withdrawals SET is_delete=1 WHERE check_batch=#{checkBatch} AND status != 1
+    </update>
+
+</mapper>

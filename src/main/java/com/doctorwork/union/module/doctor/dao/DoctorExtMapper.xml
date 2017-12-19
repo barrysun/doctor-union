@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.doctorwork.union.module.doctor.dao.DoctorExtMapper" >
+    <resultMap id="BaseResultMap" type="com.doctorwork.union.module.doctor.vo.DoctorRetVo" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="agent_id" property="agentId" jdbcType="VARCHAR" />
+        <result column="doctor_name" property="doctorName" jdbcType="VARCHAR" />
+        <result column="doctor_avatar" property="doctorAvatar" jdbcType="VARCHAR" />
+        <result column="sex" property="sex" jdbcType="INTEGER" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="hospital" property="hospital" jdbcType="VARCHAR" />
+        <result column="department" property="department" jdbcType="VARCHAR" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="specialty" property="specialty" jdbcType="VARCHAR" />
+        <result column="note" property="note" jdbcType="VARCHAR" />
+        <result column="work_price" property="workPrice" jdbcType="DECIMAL" />
+        <result column="order_price" property="orderPrice" jdbcType="DECIMAL" />
+        <result column="account_status" property="accountStatus" jdbcType="INTEGER" />
+        <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="modify_time" property="modifyTime" jdbcType="BIGINT" />
+        <result column="invitation_count" property="invitationCount" jdbcType="INTEGER" />
+        <result column="card_user_name" property="cardUserName" jdbcType="VARCHAR" />
+        <result column="id_card" property="idCard" jdbcType="VARCHAR" />
+        <result column="card_number" property="cardNumber" jdbcType="VARCHAR" />
+        <result column="card_bank" property="cardBank" jdbcType="VARCHAR" />
+        <result column="passport_id" property="passportId" jdbcType="VARCHAR" />
+        <result column="platform_rebate" property="platformRebate" jdbcType="DECIMAL" />
+        <result column="user_name" property="agentName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap" parameterType="com.doctorwork.union.module.doctor.vo.DoctorVo" >
+        select
+        d.id, d.agent_id, d.doctor_name, d.doctor_avatar, d.sex, d.phone, d.hospital, d.department, d.title,
+        d.specialty, d.note, d.work_price, d.order_price, d.account_status, d.is_delete, d.create_time,
+        d.modify_time, d.invitation_count, d.card_user_name, d.id_card, d.card_number, d.card_bank, d.passport_id,
+        d.platform_rebate,a.user_name
+        from t_doctor d,t_agent a
+        where
+        a.id=d.agent_id
+        <if test="search != null" >
+            and (d.doctor_name like  '%${search}%'
+            or d.phone like '%${phone}%')
+        </if>
+        <if test="agentId != null">
+            and d.agent_id=#{agentId,jdbcType=VARCHAR}
+        </if>
+        order by d.create_time
+    </select>
+
+    <select id="clinicSelect" resultMap="BaseResultMap" parameterType="com.doctorwork.union.module.doctor.vo.DoctorVo" >
+        select
+        d.id, d.agent_id, d.doctor_name, d.doctor_avatar, d.sex, d.phone, d.hospital, d.department, d.title,
+        d.specialty, d.note, d.work_price, d.order_price, d.account_status, d.is_delete, d.create_time,
+        d.modify_time, d.invitation_count, d.card_user_name, d.id_card, d.card_number, d.card_bank, d.passport_id,
+        d.platform_rebate,a.user_name
+        from t_doctor d,t_agent a
+        where
+        a.id=d.agent_id and d.account_status=1
+        <if test="doctorName != null" >
+            and d.doctor_name like  '%${doctorName}%'
+        </if>
+        <if test="title != null">
+            and d.title  like  '%${title}%'
+        </if>
+
+        <if test="hospital != null">
+            and d.hospital like  '%${hospital}%'
+        </if>
+        order by d.create_time
+    </select>
+
+</mapper>

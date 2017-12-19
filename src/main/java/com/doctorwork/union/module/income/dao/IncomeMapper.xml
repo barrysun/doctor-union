@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.doctorwork.union.module.income.dao.IncomeMapper" >
+  <resultMap id="BaseResultMap" type="com.doctorwork.union.module.income.bean.Income" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="serial_number" property="serialNumber" jdbcType="VARCHAR" />
+    <result column="income_date" property="incomeDate" jdbcType="BIGINT" />
+    <result column="pay_account" property="payAccount" jdbcType="VARCHAR" />
+    <result column="clinic_id" property="clinicId" jdbcType="VARCHAR" />
+    <result column="pay_money" property="payMoney" jdbcType="DECIMAL" />
+    <result column="service_money" property="serviceMoney" jdbcType="DECIMAL" />
+    <result column="platform_money" property="platformMoney" jdbcType="DECIMAL" />
+    <result column="incomon_money" property="incomonMoney" jdbcType="DECIMAL" />
+    <result column="balance" property="balance" jdbcType="DECIMAL" />
+    <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="modify_time" property="modifyTime" jdbcType="BIGINT" />
+    <result column="passport_id" property="passportId" jdbcType="VARCHAR" />
+    <result column="doctor_id" property="doctorId" jdbcType="VARCHAR" />
+    <result column="invitation_id" property="invitationId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, serial_number, income_date, pay_account, clinic_id, pay_money, service_money, 
+    platform_money, incomon_money, balance, is_delete, create_time, modify_time, passport_id, 
+    doctor_id, invitation_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.doctorwork.union.module.income.bean.IncomeCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_income
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_income
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <insert id="insert" parameterType="com.doctorwork.union.module.income.bean.Income" >
+    insert into t_income (id, serial_number, income_date, 
+      pay_account, clinic_id, pay_money, 
+      service_money, platform_money, incomon_money, 
+      balance, is_delete, create_time, 
+      modify_time, passport_id, doctor_id, 
+      invitation_id)
+    values (#{id,jdbcType=VARCHAR}, #{serialNumber,jdbcType=VARCHAR}, #{incomeDate,jdbcType=BIGINT}, 
+      #{payAccount,jdbcType=VARCHAR}, #{clinicId,jdbcType=VARCHAR}, #{payMoney,jdbcType=DECIMAL}, 
+      #{serviceMoney,jdbcType=DECIMAL}, #{platformMoney,jdbcType=DECIMAL}, #{incomonMoney,jdbcType=DECIMAL}, 
+      #{balance,jdbcType=DECIMAL}, #{isDelete,jdbcType=INTEGER}, #{createTime,jdbcType=BIGINT}, 
+      #{modifyTime,jdbcType=BIGINT}, #{passportId,jdbcType=VARCHAR}, #{doctorId,jdbcType=VARCHAR}, 
+      #{invitationId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.doctorwork.union.module.income.bean.Income" >
+    insert into t_income
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="serialNumber != null" >
+        serial_number,
+      </if>
+      <if test="incomeDate != null" >
+        income_date,
+      </if>
+      <if test="payAccount != null" >
+        pay_account,
+      </if>
+      <if test="clinicId != null" >
+        clinic_id,
+      </if>
+      <if test="payMoney != null" >
+        pay_money,
+      </if>
+      <if test="serviceMoney != null" >
+        service_money,
+      </if>
+      <if test="platformMoney != null" >
+        platform_money,
+      </if>
+      <if test="incomonMoney != null" >
+        incomon_money,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="passportId != null" >
+        passport_id,
+      </if>
+      <if test="doctorId != null" >
+        doctor_id,
+      </if>
+      <if test="invitationId != null" >
+        invitation_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="serialNumber != null" >
+        #{serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="incomeDate != null" >
+        #{incomeDate,jdbcType=BIGINT},
+      </if>
+      <if test="payAccount != null" >
+        #{payAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="clinicId != null" >
+        #{clinicId,jdbcType=VARCHAR},
+      </if>
+      <if test="payMoney != null" >
+        #{payMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceMoney != null" >
+        #{serviceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="platformMoney != null" >
+        #{platformMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="incomonMoney != null" >
+        #{incomonMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=BIGINT},
+      </if>
+      <if test="passportId != null" >
+        #{passportId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorId != null" >
+        #{doctorId,jdbcType=VARCHAR},
+      </if>
+      <if test="invitationId != null" >
+        #{invitationId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.doctorwork.union.module.income.bean.IncomeCriteria" resultType="java.lang.Integer" >
+    select count(*) from t_income
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.doctorwork.union.module.income.bean.Income" >
+    update t_income
+    <set >
+      <if test="serialNumber != null" >
+        serial_number = #{serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="incomeDate != null" >
+        income_date = #{incomeDate,jdbcType=BIGINT},
+      </if>
+      <if test="payAccount != null" >
+        pay_account = #{payAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="clinicId != null" >
+        clinic_id = #{clinicId,jdbcType=VARCHAR},
+      </if>
+      <if test="payMoney != null" >
+        pay_money = #{payMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceMoney != null" >
+        service_money = #{serviceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="platformMoney != null" >
+        platform_money = #{platformMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="incomonMoney != null" >
+        incomon_money = #{incomonMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=BIGINT},
+      </if>
+      <if test="passportId != null" >
+        passport_id = #{passportId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorId != null" >
+        doctor_id = #{doctorId,jdbcType=VARCHAR},
+      </if>
+      <if test="invitationId != null" >
+        invitation_id = #{invitationId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.doctorwork.union.module.income.bean.Income" >
+    update t_income
+    set serial_number = #{serialNumber,jdbcType=VARCHAR},
+      income_date = #{incomeDate,jdbcType=BIGINT},
+      pay_account = #{payAccount,jdbcType=VARCHAR},
+      clinic_id = #{clinicId,jdbcType=VARCHAR},
+      pay_money = #{payMoney,jdbcType=DECIMAL},
+      service_money = #{serviceMoney,jdbcType=DECIMAL},
+      platform_money = #{platformMoney,jdbcType=DECIMAL},
+      incomon_money = #{incomonMoney,jdbcType=DECIMAL},
+      balance = #{balance,jdbcType=DECIMAL},
+      is_delete = #{isDelete,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=BIGINT},
+      modify_time = #{modifyTime,jdbcType=BIGINT},
+      passport_id = #{passportId,jdbcType=VARCHAR},
+      doctor_id = #{doctorId,jdbcType=VARCHAR},
+      invitation_id = #{invitationId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,9 @@
+target/*
+doctor-union.iml
+.idea/*
+logs
+/target/
+.settings
+.classpath
+.project
+

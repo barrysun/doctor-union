@@ -1,0 +1,29 @@
+#配置文件环境配置
+server:
+  port: 8080
+  context-path: /doctor-union
+  session:
+    timeout: 60
+  connection-timeout: 32000
+
+application:
+      name: doctor-union
+
+mybatis:
+     type-aliases-package: com.doctorwork.union.module
+     mapper-locations: classpath:com/doctorwork/union/module/*/*.xml
+
+
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+
+
+logging:
+    config: classpath:logback-spring.xml
+spring:
+  profiles:
+    active: dev
+

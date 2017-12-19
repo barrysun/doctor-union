@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.doctorwork.union.module.withdrawals.dao.WithdrawalsMapper" >
+  <resultMap id="BaseResultMap" type="com.doctorwork.union.module.withdrawals.bean.Withdrawals" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="withdrawals_date" property="withdrawalsDate" jdbcType="BIGINT" />
+    <result column="withdrawals_money" property="withdrawalsMoney" jdbcType="DECIMAL" />
+    <result column="service_money" property="serviceMoney" jdbcType="DECIMAL" />
+    <result column="personal_income_tax_money" property="personalIncomeTaxMoney" jdbcType="DECIMAL" />
+    <result column="arrival_money" property="arrivalMoney" jdbcType="DECIMAL" />
+    <result column="balance" property="balance" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="modify_time" property="modifyTime" jdbcType="BIGINT" />
+    <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+    <result column="doctor_id" property="doctorId" jdbcType="VARCHAR" />
+    <result column="passport_id" property="passportId" jdbcType="VARCHAR" />
+    <result column="modify_user_name" property="modifyUserName" jdbcType="VARCHAR" />
+    <result column="serial_number" property="serialNumber" jdbcType="VARCHAR" />
+    <result column="check_batch" property="checkBatch" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, withdrawals_date, withdrawals_money, service_money, personal_income_tax_money, 
+    arrival_money, balance, status, reason, create_time, modify_time, is_delete, doctor_id, 
+    passport_id, modify_user_name, serial_number, check_batch, order_no
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.doctorwork.union.module.withdrawals.bean.WithdrawalsCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_withdrawals
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_withdrawals
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <insert id="insert" parameterType="com.doctorwork.union.module.withdrawals.bean.Withdrawals" >
+    insert into t_withdrawals (id, withdrawals_date, withdrawals_money, 
+      service_money, personal_income_tax_money, arrival_money, 
+      balance, status, reason, 
+      create_time, modify_time, is_delete, 
+      doctor_id, passport_id, modify_user_name, 
+      serial_number, check_batch, order_no
+      )
+    values (#{id,jdbcType=VARCHAR}, #{withdrawalsDate,jdbcType=BIGINT}, #{withdrawalsMoney,jdbcType=DECIMAL}, 
+      #{serviceMoney,jdbcType=DECIMAL}, #{personalIncomeTaxMoney,jdbcType=DECIMAL}, #{arrivalMoney,jdbcType=DECIMAL}, 
+      #{balance,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{reason,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=BIGINT}, #{modifyTime,jdbcType=BIGINT}, #{isDelete,jdbcType=INTEGER}, 
+      #{doctorId,jdbcType=VARCHAR}, #{passportId,jdbcType=VARCHAR}, #{modifyUserName,jdbcType=VARCHAR}, 
+      #{serialNumber,jdbcType=VARCHAR}, #{checkBatch,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.doctorwork.union.module.withdrawals.bean.Withdrawals" >
+    insert into t_withdrawals
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="withdrawalsDate != null" >
+        withdrawals_date,
+      </if>
+      <if test="withdrawalsMoney != null" >
+        withdrawals_money,
+      </if>
+      <if test="serviceMoney != null" >
+        service_money,
+      </if>
+      <if test="personalIncomeTaxMoney != null" >
+        personal_income_tax_money,
+      </if>
+      <if test="arrivalMoney != null" >
+        arrival_money,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="reason != null" >
+        reason,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="doctorId != null" >
+        doctor_id,
+      </if>
+      <if test="passportId != null" >
+        passport_id,
+      </if>
+      <if test="modifyUserName != null" >
+        modify_user_name,
+      </if>
+      <if test="serialNumber != null" >
+        serial_number,
+      </if>
+      <if test="checkBatch != null" >
+        check_batch,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="withdrawalsDate != null" >
+        #{withdrawalsDate,jdbcType=BIGINT},
+      </if>
+      <if test="withdrawalsMoney != null" >
+        #{withdrawalsMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceMoney != null" >
+        #{serviceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="personalIncomeTaxMoney != null" >
+        #{personalIncomeTaxMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="arrivalMoney != null" >
+        #{arrivalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=BIGINT},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="doctorId != null" >
+        #{doctorId,jdbcType=VARCHAR},
+      </if>
+      <if test="passportId != null" >
+        #{passportId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserName != null" >
+        #{modifyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="serialNumber != null" >
+        #{serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="checkBatch != null" >
+        #{checkBatch,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.doctorwork.union.module.withdrawals.bean.WithdrawalsCriteria" resultType="java.lang.Integer" >
+    select count(*) from t_withdrawals
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.doctorwork.union.module.withdrawals.bean.Withdrawals" >
+    update t_withdrawals
+    <set >
+      <if test="withdrawalsDate != null" >
+        withdrawals_date = #{withdrawalsDate,jdbcType=BIGINT},
+      </if>
+      <if test="withdrawalsMoney != null" >
+        withdrawals_money = #{withdrawalsMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceMoney != null" >
+        service_money = #{serviceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="personalIncomeTaxMoney != null" >
+        personal_income_tax_money = #{personalIncomeTaxMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="arrivalMoney != null" >
+        arrival_money = #{arrivalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null" >
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=BIGINT},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="doctorId != null" >
+        doctor_id = #{doctorId,jdbcType=VARCHAR},
+      </if>
+      <if test="passportId != null" >
+        passport_id = #{passportId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserName != null" >
+        modify_user_name = #{modifyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="serialNumber != null" >
+        serial_number = #{serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="checkBatch != null" >
+        check_batch = #{checkBatch,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.doctorwork.union.module.withdrawals.bean.Withdrawals" >
+    update t_withdrawals
+    set withdrawals_date = #{withdrawalsDate,jdbcType=BIGINT},
+      withdrawals_money = #{withdrawalsMoney,jdbcType=DECIMAL},
+      service_money = #{serviceMoney,jdbcType=DECIMAL},
+      personal_income_tax_money = #{personalIncomeTaxMoney,jdbcType=DECIMAL},
+      arrival_money = #{arrivalMoney,jdbcType=DECIMAL},
+      balance = #{balance,jdbcType=DECIMAL},
+      status = #{status,jdbcType=INTEGER},
+      reason = #{reason,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      modify_time = #{modifyTime,jdbcType=BIGINT},
+      is_delete = #{isDelete,jdbcType=INTEGER},
+      doctor_id = #{doctorId,jdbcType=VARCHAR},
+      passport_id = #{passportId,jdbcType=VARCHAR},
+      modify_user_name = #{modifyUserName,jdbcType=VARCHAR},
+      serial_number = #{serialNumber,jdbcType=VARCHAR},
+      check_batch = #{checkBatch,jdbcType=VARCHAR},
+      order_no = #{orderNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
